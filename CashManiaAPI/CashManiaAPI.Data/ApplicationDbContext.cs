@@ -1,4 +1,4 @@
-﻿using CashManiaAPI.Models;
+﻿using CashManiaAPI.Data.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,9 +10,5 @@ public class ApplicationDbContext : IdentityDbContext<User>
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
-        base.OnModelCreating(builder);
-
-    }
+    public DbSet<Transaction> Transactions { get; set; }
 }

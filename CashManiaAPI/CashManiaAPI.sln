@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashManiaAPI", "CashManiaAPI\CashManiaAPI.csproj", "{61373358-4C6B-4CA5-B7E8-EBCBDC5C1B06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashManiaAPI.Data", "CashManiaAPI.Data\CashManiaAPI.Data.csproj", "{2C5025F3-ED87-42D5-BC7D-20D748C60A46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashManiaAPI.Data", "CashManiaAPI.Data\CashManiaAPI.Data.csproj", "{2C5025F3-ED87-42D5-BC7D-20D748C60A46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashManiaAPI.Services", "CashManiaAPI.Services\CashManiaAPI.Services.csproj", "{F2C2F7C6-8A68-4426-9863-446EEA30F2C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2C5025F3-ED87-42D5-BC7D-20D748C60A46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C5025F3-ED87-42D5-BC7D-20D748C60A46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C5025F3-ED87-42D5-BC7D-20D748C60A46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2C2F7C6-8A68-4426-9863-446EEA30F2C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2C2F7C6-8A68-4426-9863-446EEA30F2C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2C2F7C6-8A68-4426-9863-446EEA30F2C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2C2F7C6-8A68-4426-9863-446EEA30F2C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

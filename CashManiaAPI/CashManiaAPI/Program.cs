@@ -1,5 +1,5 @@
+using CashManiaAPI.Data.Models.Entities;
 using CashManiaAPI.DbContext;
-using CashManiaAPI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
