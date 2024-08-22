@@ -15,11 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CashManiaAPI.Data\CashManiaAPI.Data.csproj" />
+    <ProjectReference Include="..\CashManiaAPI.Services\CashManiaAPI.Services.csproj" />
   </ItemGroup>
 
 </Project>

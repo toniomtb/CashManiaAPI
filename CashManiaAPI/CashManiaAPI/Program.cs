@@ -1,18 +1,26 @@
+using CashManiaAPI.Data;
 using CashManiaAPI.Data.Models.Entities;
-using CashManiaAPI.DbContext;
+using CashManiaAPI.Data.Repositories.Interfaces;
+using CashManiaAPI.Data.Repositories;
+using CashManiaAPI.Services;
+using CashManiaAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    // Define the security scheme
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
         Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
@@ -23,7 +31,6 @@ builder.Services.AddSwaggerGen(options =>
         Description = "Enter a Bearer token"
     });
 
-    // Add security requirement
     options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
     {
         {

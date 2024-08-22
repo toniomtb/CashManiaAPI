@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace CashManiaAPI.DbContext;
+namespace CashManiaAPI.Data;
 
 public class ApplicationDbContext : IdentityDbContext<User>
 {
