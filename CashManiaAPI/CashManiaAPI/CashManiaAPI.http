@@ -1,0 +1,6 @@
+@CashManiaAPI_HostAddress = http://localhost:5240
+
+GET {{CashManiaAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
