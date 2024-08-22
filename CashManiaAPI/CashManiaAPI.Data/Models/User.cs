@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace CashManiaAPI.Model;
+namespace CashManiaAPI.Models;
 public class User : IdentityUser
 {
 

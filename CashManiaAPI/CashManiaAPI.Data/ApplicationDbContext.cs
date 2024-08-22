@@ -1,4 +1,4 @@
-﻿using CashManiaAPI.Model;
+﻿using CashManiaAPI.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
