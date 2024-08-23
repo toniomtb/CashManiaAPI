@@ -15,7 +15,12 @@ public class UnitOfWork : IUnitOfWork
 
     public ITransactionRepository Transactions => _transactionRepository ??= new TransactionRepository(_context);
 
-    public async Task<int> SaveChangesAsync()
+    public int Save()
+    {
+        return _context.SaveChanges();
+    }
+
+    public async Task<int> SaveAsync()
     {
         return await _context.SaveChangesAsync();
     }

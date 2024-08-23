@@ -6,10 +6,21 @@ using CashManiaAPI.Services;
 using CashManiaAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using CashManiaAPI.Automapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new DTOToDomainMappingProfile());
+    mc.AddProfile(new DomainToDTOMappingProfile());
+});
+
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
@@ -47,9 +58,9 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddAuthorization();
 builder.Services.AddAuthentication()
     .AddBearerToken(IdentityConstants.BearerScheme);
+builder.Services.AddAuthorization();
 
 builder.Services.AddIdentityCore<User>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -69,6 +80,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

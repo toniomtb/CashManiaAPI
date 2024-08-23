@@ -16,7 +16,8 @@ public class TransactionService : ITransactionService
     public async Task<Transaction> AddTransactionAsync(Transaction transaction)
     {
         await _unitOfWork.Transactions.AddAsync(transaction);
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveAsync();
+
         return transaction;
     }
 
