@@ -16,4 +16,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\0. CashManiaAPI.Commons\0. CashManiaAPI.Commons.csproj" />
+  </ItemGroup>
+
 </Project>

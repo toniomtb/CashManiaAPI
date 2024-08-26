@@ -8,23 +8,35 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using CashManiaAPI.Automapper;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
+// automapper
 var mapperConfig = new MapperConfiguration(mc =>
 {
     mc.AddProfile(new DTOToDomainMappingProfile());
     mc.AddProfile(new DomainToDTOMappingProfile());
 });
-
 IMapper mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
+// unit of works
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+// repositories
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
+// services
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 builder.Services.AddControllers();
@@ -39,7 +51,7 @@ builder.Services.AddSwaggerGen(options =>
         BearerFormat = "JWT",
         Name = "Authorization",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Description = "Enter a Bearer token"
+        Description = "Enter Bearer token"
     });
 
     options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
@@ -77,6 +89,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 

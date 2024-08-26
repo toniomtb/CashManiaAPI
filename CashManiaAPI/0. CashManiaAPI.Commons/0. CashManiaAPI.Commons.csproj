@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>_0._CashManiaAPI.Commons</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CashManiaAPI.Data\CashManiaAPI.Data.csproj" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
   </ItemGroup>
 
 </Project>
