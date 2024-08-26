@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CashManiaAPI.Data\1. CashManiaAPI.Data.csproj" />
+    <ProjectReference Include="..\1. CashManiaAPI.Data\1. CashManiaAPI.Data.csproj" />
   </ItemGroup>
 
 </Project>

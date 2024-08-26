@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2. CashManiaAPI.Services", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "0. CashManiaAPI.Commons", "0. CashManiaAPI.Commons\0. CashManiaAPI.Commons.csproj", "{23FD4982-5BF2-4258-87D2-9360D14AAC7B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashManiaAPI.Tests", "CashManiaAPI.Tests\CashManiaAPI.Tests.csproj", "{B1A9DB18-1928-4D2E-BB5E-CE679C3A1BAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{23FD4982-5BF2-4258-87D2-9360D14AAC7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23FD4982-5BF2-4258-87D2-9360D14AAC7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23FD4982-5BF2-4258-87D2-9360D14AAC7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1A9DB18-1928-4D2E-BB5E-CE679C3A1BAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A9DB18-1928-4D2E-BB5E-CE679C3A1BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A9DB18-1928-4D2E-BB5E-CE679C3A1BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A9DB18-1928-4D2E-BB5E-CE679C3A1BAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

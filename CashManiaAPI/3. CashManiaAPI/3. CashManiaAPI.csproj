@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CashManiaAPI.Services\2. CashManiaAPI.Services.csproj" />
+    <ProjectReference Include="..\2. CashManiaAPI.Services\2. CashManiaAPI.Services.csproj" />
   </ItemGroup>
 
 </Project>
