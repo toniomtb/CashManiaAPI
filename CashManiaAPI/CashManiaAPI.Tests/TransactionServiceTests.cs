@@ -59,5 +59,72 @@ namespace CashManiaAPI.Tests
             result.Should()?.BeEquivalentTo(transactions);
             _mockUnitOfWork.Verify(x => x.Transactions.GetTransactionsByUserIdAsync(userId), Times.Once);
         }
+
+        [Fact]
+        public async Task GetTransactionByIdAsync_Test()
+        {
+            // Arrange
+            var transaction = new Transaction { Id = 1, Amount = 100 };
+            var transactions = new List<Transaction>
+            {
+                transaction,
+                new Transaction { Id = 2, Amount = 200 },
+                new Transaction { Id = 3, Amount = 300 }
+            };
+            _mockUnitOfWork.Setup(x => x.Transactions.GetByIdAsync(1))
+                .ReturnsAsync(transaction);
+
+            // Act
+            var result = await _transactionService.GetTransactionByIdAsync(1);
+
+            // Assert
+            result.Should()?.BeEquivalentTo(transaction);
+            _mockUnitOfWork.Verify(x => x.Transactions.GetByIdAsync(1), Times.Once);
+        }
+
+        [Fact]
+        public async Task DeleteTransactionAsync_Test()
+        {
+            // Arrange
+            var id = 1;
+            var transaction = new Transaction { Id = id, Amount = 100 };
+            bool isDeleted = false;
+
+            _mockUnitOfWork.Setup(x => x.Transactions.GetByIdAsync(id))
+                .ReturnsAsync(() => isDeleted ? null : transaction);
+            _mockUnitOfWork.Setup(x => x.Transactions.Delete(transaction)).Callback(() => isDeleted = true).Verifiable();
+            _mockUnitOfWork.Setup(x => x.SaveAsync()).ReturnsAsync(1).Verifiable();
+
+            // Act 
+            await _transactionService.DeleteTransactionAsync(id);
+            var resultGet = await _transactionService.GetTransactionByIdAsync(1);
+
+            // Assert
+            _mockUnitOfWork.Verify(x => x.Transactions.Delete(transaction), Times.Once());
+            _mockUnitOfWork.Verify(x => x.SaveAsync(), Times.Once());
+            resultGet.Should()?.BeNull();
+        }
+
+        [Fact]
+        public async Task UpdateTransactionAsync_Test()
+        {
+            // Arrange
+            var transaction = new Transaction { Id = 1, Amount = 100 };
+            var updatedTransaction = new Transaction { Id = 1, Amount = 200 };
+
+            _mockUnitOfWork.Setup(x => x.Transactions.Update(updatedTransaction)).Callback(() =>
+            {
+                transaction.Amount = 200;
+            }).Verifiable();
+            _mockUnitOfWork.Setup(x => x.SaveAsync()).ReturnsAsync(1).Verifiable();
+
+            // Act
+            await _transactionService.UpdateTransactionAsync(updatedTransaction);
+
+            // Assert
+            _mockUnitOfWork.Verify(x => x.Transactions.Update(updatedTransaction), Times.Once());
+            _mockUnitOfWork.Verify(x => x.SaveAsync(), Times.Once());
+            transaction.Amount.Should().Be(200);
+        }
     }
 }

@@ -56,6 +56,38 @@ public class TransactionController : ControllerBase
         }
     }
 
+    // GET: api/transaction/user-transactions
+    [HttpGet("user-transactions")]
+    public async Task<IActionResult> GetUserTransactions()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userId))
+        {
+            _logger.LogWarning("Unauthorzied access to GetUserTransactions");
+            return Unauthorized();
+        }
+
+        try
+        {
+            var transactions = await _transactionService.GetUserTransactionsAsync(userId);
+
+            var result = _mapper.Map<IEnumerable<TransactionDto>>(transactions);
+
+            if (!transactions.Any())
+            {
+                _logger.LogInformation($"No transactions found for userId {userId}");
+                return NotFound(new { message = "No transactions found for the user." });
+            }
+
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Exception occurred during GetUserTransactions");
+            return StatusCode(500, "Internal server error");
+        }
+    }
+
     // DELETE: api/transaction/delete/{id}
     [HttpDelete("delete/{id}")]
     public async Task<IActionResult> DeleteTransaction([FromRoute] int id)
@@ -121,38 +153,6 @@ public class TransactionController : ControllerBase
         catch (Exception e)
         {
             _logger.LogError(e, $"Error occurred while updating transaction with ID {transactionDto.Id}");
-            return StatusCode(500, "Internal server error");
-        }
-    }
-
-    // GET: api/transaction/user-transactions
-    [HttpGet("user-transactions")]
-    public async Task<IActionResult> GetUserTransactions()
-    {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (string.IsNullOrEmpty(userId))
-        {
-            _logger.LogWarning("Unauthorzied access to GetUserTransactions");
-            return Unauthorized();
-        }
-
-        try
-        {
-            var transactions = await _transactionService.GetUserTransactionsAsync(userId);
-
-            var result = _mapper.Map<IEnumerable<TransactionDto>>(transactions);
-
-            if (!transactions.Any())
-            {
-                _logger.LogInformation($"No transactions found for userId {userId}");
-                return NotFound(new { message = "No transactions found for the user." });
-            }
-
-            return Ok(result);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "Exception occurred during GetUserTransactions");
             return StatusCode(500, "Internal server error");
         }
     }
