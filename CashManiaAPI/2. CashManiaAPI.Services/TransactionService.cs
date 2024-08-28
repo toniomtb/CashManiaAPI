@@ -25,4 +25,25 @@ public class TransactionService : ITransactionService
     {
         return await _unitOfWork.Transactions.GetTransactionsByUserIdAsync(userId);
     }
+
+    public async Task<Transaction> GetTransactionByIdAsync(int id)
+    {
+        return await _unitOfWork.Transactions.GetByIdAsync(id);
+    }
+
+    public async Task DeleteTransactionAsync(int id)
+    {
+        var transaction = await GetTransactionByIdAsync(id);
+        if (transaction != null)
+        {
+            _unitOfWork.Transactions.Delete(transaction);
+            await _unitOfWork.SaveAsync();
+        }
+    }
+
+    public async Task UpdateTransactionAsync(Transaction transaction)
+    {
+        _unitOfWork.Transactions.Update(transaction);
+        await _unitOfWork.SaveAsync();
+    }
 }
