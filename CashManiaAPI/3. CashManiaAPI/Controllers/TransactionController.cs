@@ -76,6 +76,32 @@ public class TransactionController : ControllerBase
         }
     }
 
+    // GET: api/transaction/get-filtered
+    [HttpGet("get-filtered")]
+    public async Task<IActionResult> GetFilteredTransactions([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+    {
+        if (startDate > endDate)
+        {
+            _logger.LogInformation("GetFilteredTransactions - Incorrect date range");
+            return BadRequest("Start date must be before end date.");
+        }
+
+        try
+        {
+            var transactions = await _transactionService.GetTransactionByDateRangeAsync(startDate, endDate);
+            if (!transactions.Any())
+                return NotFound("No transactions found for the given date range.");
+
+            return Ok(transactions);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Failed to retrieve transactions.");
+            return StatusCode(500, "Internal server error.");
+        }
+    }
+
+
     // DELETE: api/transaction/delete/{id}
     [HttpDelete("delete/{id}")]
     public async Task<IActionResult> DeleteTransaction([FromRoute] int id)

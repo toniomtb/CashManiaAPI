@@ -3,7 +3,9 @@ using CashManiaAPI.Data.Models.Entities;
 using CashManiaAPI.Data.Models.Enums;
 using CashManiaAPI.Services;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Moq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CashManiaAPI.Tests
 {
@@ -120,5 +122,16 @@ namespace CashManiaAPI.Tests
             _mockUnitOfWork.Verify(x => x.SaveAsync(), Times.Once());
             transaction.Amount.Should().Be(200);
         }
+
+        //[Fact]
+        //public async Task GetTransactionByDateRangeAsync_Test()
+        //{
+        //    // Arrange 
+
+        //    // Act
+
+        //    // Assert
+        //}
+
     }
 }

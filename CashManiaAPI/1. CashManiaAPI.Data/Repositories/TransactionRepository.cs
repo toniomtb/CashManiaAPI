@@ -20,4 +20,19 @@ public class TransactionRepository : Repository<Transaction>, ITransactionReposi
     {
         return await _dbSet.AnyAsync(predicate);
     }
+
+    public async Task<IEnumerable<Transaction>> GetByDateFilteredAsync(DateTime startDate, DateTime endDate)
+    {
+        return await _context.Set<Transaction>().Where(x => x.Date >= startDate && x.Date <= endDate).ToListAsync();
+    }
+
+    public async Task<IEnumerable<Transaction>> GetByDateFilteredSqlAsync(DateTime startDate, DateTime endDate)
+    {
+        var query = "SELECT * FROM Transactions WHERE Date >= @p0 AND Date <= @p1";
+
+        return await _context.Transactions
+            .FromSqlRaw(query, startDate, endDate)
+            .AsNoTracking()
+            .ToListAsync();
+    }
 }
