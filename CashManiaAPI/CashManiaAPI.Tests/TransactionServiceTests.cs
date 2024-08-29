@@ -65,12 +65,6 @@ namespace CashManiaAPI.Tests
         {
             // Arrange
             var transaction = new Transaction { Id = 1, Amount = 100 };
-            var transactions = new List<Transaction>
-            {
-                transaction,
-                new Transaction { Id = 2, Amount = 200 },
-                new Transaction { Id = 3, Amount = 300 }
-            };
             _mockUnitOfWork.Setup(x => x.Transactions.GetByIdAsync(1))
                 .ReturnsAsync(transaction);
 
