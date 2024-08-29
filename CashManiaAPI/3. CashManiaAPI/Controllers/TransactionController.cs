@@ -66,7 +66,6 @@ public class TransactionController : ControllerBase
             }
 
             var result = _mapper.Map<IEnumerable<TransactionDto>>(transactions);
-
             return Ok(result);
         }
         catch (Exception e)
@@ -80,6 +79,12 @@ public class TransactionController : ControllerBase
     [HttpGet("get-filtered")]
     public async Task<IActionResult> GetFilteredTransactions([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
     {
+        if (startDate == null || endDate == null)
+        {
+            _logger.LogInformation("GetFilteredTransactions - StartDate or EndDate == null");
+            return BadRequest("Both start date and end date are required.");
+        }
+
         if (startDate > endDate)
         {
             _logger.LogInformation("GetFilteredTransactions - Incorrect date range");
@@ -92,7 +97,8 @@ public class TransactionController : ControllerBase
             if (!transactions.Any())
                 return NotFound("No transactions found for the given date range.");
 
-            return Ok(transactions);
+            var result = _mapper.Map<IEnumerable<TransactionDto>>(transactions);
+            return Ok(result);
         }
         catch (Exception e)
         {
@@ -100,7 +106,6 @@ public class TransactionController : ControllerBase
             return StatusCode(500, "Internal server error.");
         }
     }
-
 
     // DELETE: api/transaction/delete/{id}
     [HttpDelete("delete/{id}")]

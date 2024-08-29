@@ -123,15 +123,29 @@ namespace CashManiaAPI.Tests
             transaction.Amount.Should().Be(200);
         }
 
-        //[Fact]
-        //public async Task GetTransactionByDateRangeAsync_Test()
-        //{
-        //    // Arrange 
+        [Fact]
+        public async Task GetTransactionByDateRangeAsync_Test()
+        {
+            // Arrange 
+            var startDate = new DateTime(2024, 01, 01);
+            var endDate = new DateTime(2024, 01, 31);
 
-        //    // Act
+            var expectedTransactions = new List<Transaction>
+            {
+                new Transaction { Date = new DateTime(2024, 01, 02) },
+                new Transaction { Date = new DateTime(2024, 01, 29) }
+            };
 
-        //    // Assert
-        //}
+            _mockUnitOfWork.Setup(uow => uow.Transactions.GetByDateFilteredSqlAsync(startDate, endDate))
+                .ReturnsAsync(expectedTransactions);
+
+            // Act
+            var result = await _transactionService.GetTransactionByDateRangeAsync(startDate, endDate);
+
+            // Assert
+            result.Should().BeEquivalentTo(expectedTransactions);
+            _mockUnitOfWork.Verify(uow => uow.Transactions.GetByDateFilteredSqlAsync(startDate, endDate), Times.Once);
+        }
 
     }
 }
