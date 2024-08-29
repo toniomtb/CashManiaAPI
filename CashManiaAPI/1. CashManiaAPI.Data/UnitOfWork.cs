@@ -7,6 +7,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly ApplicationDbContext _context;
 
     private ITransactionRepository _transactionRepository;
+    private ICategoryRepository _categoryRepository;
 
     public UnitOfWork(ApplicationDbContext context)
     {
@@ -14,6 +15,7 @@ public class UnitOfWork : IUnitOfWork
     }
 
     public ITransactionRepository Transactions => _transactionRepository ??= new TransactionRepository(_context);
+    public ICategoryRepository Categories => _categoryRepository ??= new CategoryRepository(_context);
 
     public int Save()
     {

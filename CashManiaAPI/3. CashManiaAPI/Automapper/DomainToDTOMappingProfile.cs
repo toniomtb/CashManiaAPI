@@ -9,5 +9,7 @@ public class DomainToDTOMappingProfile : Profile
     public DomainToDTOMappingProfile()
     {
         CreateMap<Transaction, TransactionDto>();
+
+        CreateMap<Category, CategoryDto>();
     }
 }

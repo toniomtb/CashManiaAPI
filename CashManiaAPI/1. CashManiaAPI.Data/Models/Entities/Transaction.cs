@@ -10,7 +10,10 @@ public class Transaction
     public string Description { get; set; }
     public DateTime Date { get; set; }
     public string UserId { get; set; }
+    public int CategoryId { get; set; }
 
-    //navigation properties
+
+    // Navigation properties
     public User User { get; set; }
+    public Category Category { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using CashManiaAPI.Data.Models.Entities;
+﻿using System.Linq.Expressions;
+using CashManiaAPI.Data.Models.Entities;
 using CashManiaAPI.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,5 +14,10 @@ public class TransactionRepository : Repository<Transaction>, ITransactionReposi
     public async Task<IEnumerable<Transaction>> GetTransactionsByUserIdAsync(string userId)
     {
         return await _dbSet.Where(t => t.UserId == userId).ToListAsync();
+    }
+
+    public async Task<bool> AnyAsync(Expression<Func<Transaction, bool>> predicate)
+    {
+        return await _dbSet.AnyAsync(predicate);
     }
 }

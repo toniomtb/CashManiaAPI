@@ -12,5 +12,9 @@ public class DTOToDomainMappingProfile : Profile
             .ForMember(x => x.Id, opt => opt.Ignore())
             .ForMember(x => x.UserId, opt => opt.Ignore())
             .ForMember(x => x.User, opt => opt.Ignore());
+
+        CreateMap<CategoryDto, Category>()
+            .ForMember(x => x.Id, opt => opt.Ignore())
+            .ForMember(x => x.Transactions, opt => opt.Ignore());
     }
 }
