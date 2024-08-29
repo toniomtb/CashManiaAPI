@@ -90,7 +90,7 @@ public class CategoryController : ControllerBase
         catch (InvalidOperationException e)
         {
             _logger.LogError(e, "Exception occurred during DeleteCategory");
-            return BadRequest(e);
+            return BadRequest(e.Message);
         }
         catch (Exception e)
         {
