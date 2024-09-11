@@ -4,29 +4,22 @@ using CashManiaAPI.Services.Interfaces;
 
 namespace CashManiaAPI.Services;
 
-public class CategoryService : ICategoryService
+public class CategoryService(IUnitOfWork unitOfWork) : ICategoryService
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public CategoryService(IUnitOfWork unitOfWork)
-    {
-        _unitOfWork = unitOfWork;
-    }
-
     public Task<IEnumerable<Category>> GetAllCategoriesAsync()
     {
-        return _unitOfWork.Categories.GetAllAsync();
+        return unitOfWork.Categories.GetAllAsync();
     }
 
     public async Task AddCategoryAsync(Category category)
     {
-        await _unitOfWork.Categories.AddAsync(category);
-        await _unitOfWork.SaveAsync();
+        await unitOfWork.Categories.AddAsync(category);
+        await unitOfWork.SaveAsync();
     }
 
     public async Task<Category> GetCategoryByIdAsync(int id)
     {
-        return await _unitOfWork.Categories.GetByIdAsync(id);
+        return await unitOfWork.Categories.GetByIdAsync(id);
     }
 
     public async Task DeleteCategoryAsync(Category category)
@@ -34,12 +27,12 @@ public class CategoryService : ICategoryService
         if (await IsCategoryInUseAsync(category.Id))
             throw new InvalidOperationException("Category cannot be deleted because it is in use.");
 
-        _unitOfWork.Categories.Delete(category);
-        await _unitOfWork.SaveAsync();
+        unitOfWork.Categories.Delete(category);
+        await unitOfWork.SaveAsync();
     }
 
     private async Task<bool> IsCategoryInUseAsync(int categoryId)
     {
-        return await _unitOfWork.Transactions.AnyAsync(x => x.CategoryId == categoryId);
+        return await unitOfWork.Transactions.AnyAsync(x => x.CategoryId == categoryId);
     }
 }

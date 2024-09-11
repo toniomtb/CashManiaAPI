@@ -3,9 +3,7 @@ using CashManiaAPI.Data.Models.Entities;
 using CashManiaAPI.Data.Models.Enums;
 using CashManiaAPI.Services;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Moq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CashManiaAPI.Tests
 {

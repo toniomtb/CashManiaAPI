@@ -28,7 +28,8 @@ public class TransactionRepository : Repository<Transaction>, ITransactionReposi
 
     public async Task<IEnumerable<Transaction>> GetByDateFilteredSqlAsync(DateTime startDate, DateTime endDate)
     {
-        var query = "SELECT * FROM Transactions WHERE Date >= @p0 AND Date <= @p1";
+        endDate = endDate.Date.AddDays(1);
+        var query = "SELECT * FROM Transactions WHERE Date >= @p0 AND Date < @p1";
 
         return await _context.Transactions
             .FromSqlRaw(query, startDate, endDate)
