@@ -4,6 +4,7 @@ using CashManiaAPI.Data.Models.Enums;
 using CashManiaAPI.Services;
 using FluentAssertions;
 using Moq;
+using System.Security.Claims;
 
 namespace CashManiaAPI.Tests
 {
@@ -27,6 +28,7 @@ namespace CashManiaAPI.Tests
                 Amount = 10, Date = DateTime.Now, Description = "Test add transaction", Type = TransactionType.Expense
             };
 
+            _mockUnitOfWork.Setup(x => x.Categories.GetByIdAsync(0)).ReturnsAsync((Category)null);
             _mockUnitOfWork.Setup(x => x.Transactions.AddAsync(transaction)).Returns(Task.CompletedTask);
             _mockUnitOfWork.Setup(x => x.SaveAsync()).ReturnsAsync(1);
 
@@ -125,6 +127,7 @@ namespace CashManiaAPI.Tests
         public async Task GetTransactionByDateRangeAsync_Test()
         {
             // Arrange 
+            var userId = "userId";
             var startDate = new DateTime(2024, 01, 01);
             var endDate = new DateTime(2024, 01, 31);
 
@@ -134,15 +137,15 @@ namespace CashManiaAPI.Tests
                 new Transaction { Date = new DateTime(2024, 01, 29) }
             };
 
-            _mockUnitOfWork.Setup(uow => uow.Transactions.GetByDateFilteredSqlAsync(startDate, endDate))
+            _mockUnitOfWork.Setup(uow => uow.Transactions.GetByDateFilteredSqlAsync(userId, startDate, endDate))
                 .ReturnsAsync(expectedTransactions);
 
             // Act
-            var result = await _transactionService.GetTransactionByDateRangeAsync(startDate, endDate);
+            var result = await _transactionService.GetTransactionByDateRangeAsync(userId, startDate, endDate);
 
             // Assert
             result.Should().BeEquivalentTo(expectedTransactions);
-            _mockUnitOfWork.Verify(uow => uow.Transactions.GetByDateFilteredSqlAsync(startDate, endDate), Times.Once);
+            _mockUnitOfWork.Verify(uow => uow.Transactions.GetByDateFilteredSqlAsync(userId, startDate, endDate), Times.Once);
         }
 
     }

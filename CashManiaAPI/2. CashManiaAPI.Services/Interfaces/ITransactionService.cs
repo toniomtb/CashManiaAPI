@@ -9,5 +9,5 @@ public interface ITransactionService
     Task<Transaction> GetTransactionByIdAsync(int id);
     Task DeleteTransactionAsync(int id);
     Task UpdateTransactionAsync(Transaction transaction);
-    Task<IEnumerable<Transaction>> GetTransactionByDateRangeAsync(DateTime startDate, DateTime endDate);
+    Task<IEnumerable<Transaction>> GetTransactionByDateRangeAsync(string userId, DateTime startDate, DateTime endDate);
 }

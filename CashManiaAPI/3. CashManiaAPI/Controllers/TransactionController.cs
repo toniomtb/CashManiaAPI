@@ -91,9 +91,11 @@ public class TransactionController : ControllerBase
             return BadRequest("Start date must be before end date.");
         }
 
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
         try
         {
-            var transactions = await _transactionService.GetTransactionByDateRangeAsync(startDate, endDate);
+            var transactions = await _transactionService.GetTransactionByDateRangeAsync(userId, startDate, endDate);
             if (!transactions.Any())
                 return NotFound("No transactions found for the given date range.");
 

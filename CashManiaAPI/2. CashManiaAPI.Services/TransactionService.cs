@@ -44,8 +44,8 @@ public class TransactionService(IUnitOfWork unitOfWork) : ITransactionService
         await unitOfWork.SaveAsync();
     }
 
-    public async Task<IEnumerable<Transaction>> GetTransactionByDateRangeAsync(DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<Transaction>> GetTransactionByDateRangeAsync(string userId, DateTime startDate, DateTime endDate)
     {
-        return await unitOfWork.Transactions.GetByDateFilteredSqlAsync(startDate, endDate);
+        return await unitOfWork.Transactions.GetByDateFilteredSqlAsync(userId, startDate, endDate);
     }
 }
