@@ -26,13 +26,13 @@ public class TransactionRepository : Repository<Transaction>, ITransactionReposi
         return await _context.Set<Transaction>().Where(x => x.Date >= startDate && x.Date <= endDate).ToListAsync();
     }
 
-    public async Task<IEnumerable<Transaction>> GetByDateFilteredSqlAsync(DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<Transaction>> GetByDateFilteredSqlAsync(string userId, DateTime startDate, DateTime endDate)
     {
         endDate = endDate.Date.AddDays(1);
-        var query = "SELECT * FROM Transactions WHERE Date >= @p0 AND Date < @p1";
+        var query = "SELECT * FROM Transactions WHERE UserId = @p0 AND Date >= @p1 AND Date < @p2";
 
         return await _context.Transactions
-            .FromSqlRaw(query, startDate, endDate)
+            .FromSqlRaw(query, userId, startDate, endDate)
             .AsNoTracking()
             .ToListAsync();
     }
